@@ -1,0 +1,38 @@
+#cloud-config
+
+hostname: rancho
+
+mounts:
+  - ["/dev/sdb1", "/mnt/docker", "ext4", ""]
+  - ["/dev/sdc1", "/mnt/MEDIA",   "xfs", ""]
+  - ["/dev/sdc2", "/mnt/STORAGE", "xfs", ""]
+
+runcmd:
+  - [ "mkdir", "-p", "/run/sendsigs.omit.d" ]
+  - [ "service", "rpcbind", "start" ]
+  - [ "service", "nfs-kernel-server", "start" ]
+  - [ "ln", "-sf", "/usr/share/zoneinfo/MST7MDT", "/etc/localtime" ]
+  - [ "iptables", "-A", "INPUT", "-p", "tcp", "--dport", "6443", "-j", "ACCEPT" ]
+            
+rancher:
+  docker:
+    graph: /mnt/docker
+  network:
+    interfaces:
+      eth*:
+       dhcp: false
+      eth0:
+       address: 192.168.100.61/25
+       gateway: 192.168.100.1
+    dns:
+     nameservers:
+      - 1.1.1.1
+      - 1.0.0.1
+  console: debian
+  sysctl:
+    vm.swappiness: 1
+    vm.vfs_cache_pressure: 50
+
+ssh_authorized_keys:
+  - ssh-ed25519 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx jd@bubba
+  - ssh-ed25519 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx jd@laptop

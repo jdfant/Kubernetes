@@ -1,0 +1,46 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+  labels:
+    cattle.io/creator: norman
+  name: cron-test
+  namespace: test
+spec:
+  concurrencyPolicy: Allow
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - args:
+            - /bin/sh
+            - -c
+            - date
+            image: busybox
+            imagePullPolicy: Always
+            name: cron-test
+            resources: {}
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {}
+              privileged: false
+              readOnlyRootFilesystem: false
+              runAsNonRoot: false
+            stdin: true
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            tty: true
+          dnsPolicy: ClusterFirst
+          restartPolicy: Never
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+  schedule: 0 17 * * *
+  successfulJobsHistoryLimit: 5
+  suspend: false
