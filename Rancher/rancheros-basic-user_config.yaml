@@ -29,9 +29,6 @@ rancher:
       - 1.1.1.1
       - 1.0.0.1
   console: debian
-  sysctl:
-    vm.swappiness: 1
-    vm.vfs_cache_pressure: 50
 
 ssh_authorized_keys:
   - ssh-ed25519 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx jd@bubba
