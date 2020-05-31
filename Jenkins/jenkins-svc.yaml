@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    field.cattle.io/targetWorkloadIds: '["deployment:jenkins:jenkins"]'
+    workload.cattle.io/targetWorkloadIdNoop: "true"
+    workload.cattle.io/workloadPortBased: "true"
+  labels:
+    cattle.io/creator: norman
+  name: jenkins-nodeport
+  namespace: jenkins
+  ownerReferences:
+  - apiVersion: apps/v1beta2
+    controller: true
+    kind: deployment
+    name: jenkins
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: jweb
+    nodePort: 32377
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  - name: jbuild
+    nodePort: 31032
+    port: 50000
+    protocol: TCP
+    targetPort: 50000
+  selector:
+    workload.user.cattle.io/workloadselector: deployment-jenkins-jenkins
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
