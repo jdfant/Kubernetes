@@ -3,24 +3,15 @@ kind: PersistentVolumeClaim
 metadata:
   finalizers:
   - kubernetes.io/pvc-protection
-  labels:
-    cattle.io/creator: norman
   name: gitlab-config
   namespace: gitlab
 spec:
   accessModes:
   - ReadWriteOnce
-  - ReadWriteMany
+  - ReadOnlyMany
   resources:
     requests:
       storage: 10Gi
   storageClassName: ""
   volumeMode: Filesystem
   volumeName: gitlab-config
-status:
-  accessModes:
-  - ReadWriteOnce
-  - ReadWriteMany
-  capacity:
-    storage: 10Gi
-  phase: Bound

@@ -3,13 +3,11 @@ kind: PersistentVolume
 metadata:
   finalizers:
   - kubernetes.io/pv-protection
-  labels:
-    cattle.io/creator: norman
   name: gitlab-config
 spec:
   accessModes:
   - ReadWriteOnce
-  - ReadWriteMany
+  - ReadOnlyMany
   capacity:
     storage: 10Gi
   claimRef:
@@ -19,8 +17,6 @@ spec:
     namespace: gitlab
   nfs:
     path: /mnt/STORAGE/GITLAB/config
-    server: 192.168.100.61
+    server: 10.10.10.61
   persistentVolumeReclaimPolicy: Retain
   volumeMode: Filesystem
-status:
-  phase: Bound
