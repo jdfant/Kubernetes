@@ -8,17 +8,19 @@ if [[ $EUID -ne 0 ]] ; then
     exit 1
 fi
 
-docker stop $(docker container ls -q)
-docker rm -f $(docker ps -qa)
-docker volume rm $(docker volume ls -qf dangling=true)
-docker volume rm $(docker volume ls -q)
-#docker network prune
-#docker system prune
+echo -e "\nWARNING: This WILL destroy your Docker/Rancher environment\n"
 
-# Be kind to the docker repos ................
-# Will need to uncomment this when Rancher versions change.
-#docker rmi $(docker images -q)
-docker rm $(docker ps -q)
+read -p "Are you sure you want to continue? " -n 1 -r
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+    exit 1
+fi
+
+clear
+
+docker stop "$(docker container ls -q)"
+
+docker system prune -f -a --volumes
 
 rm -rf /etc/ceph \
        /etc/cni \
