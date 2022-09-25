@@ -14,7 +14,7 @@ global_defs {
    vrrp_instance LB {
    state MASTER
    interface eth0
-   virtual_router_id 51
+   virtual_router_id 50
    priority 100
    advert_int 1
    authentication {
@@ -22,18 +22,16 @@ global_defs {
      auth_pass xxxxx-xxxxx-xxxxx-xxxxx
    }
    virtual_ipaddress {
-     192.168.100.80 dev eth0
+     10.10.10.75 dev wlan0
    }
    virtual_ipaddress_excluded {
-       192.168.100.81
-       192.168.100.82
-       192.168.100.83
-       192.168.100.84
-       192.168.100.85
-       192.168.100.86
-       192.168.100.87
-       192.168.100.88
-       192.168.100.89
+       10.10.10.80
+       10.10.10.81
+       10.10.10.82
+       10.10.10.83
+       10.10.10.84
+       10.10.10.85
+       10.10.10.86
    }
    track_script {
    haproxy_check
