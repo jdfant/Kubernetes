@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  JENKINS_AGENT_NAME: agent1
+  JENKINS_AGENT_WORKDIR: /var/jenkins_home/
+  JENKINS_JNLP_URL: http://jenkins.home.lan/computer/agent1/jenkins-agent.jnlp
+  JENKINS_URL: http://jenkins.home.lan
+kind: ConfigMap
+metadata:
+  labels:
+    cattle.io/creator: norman
+  name: jenkins-agent
+  namespace: jenkins
