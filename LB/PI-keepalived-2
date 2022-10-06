@@ -12,7 +12,7 @@ global_defs {
    weight 2
 }
    vrrp_instance LB {
-   state MASTER
+   state BACKUP
    interface eth0
    virtual_router_id 50
    priority 100
