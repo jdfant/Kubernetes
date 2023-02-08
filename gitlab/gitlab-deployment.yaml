@@ -24,7 +24,7 @@ spec:
     spec:
       affinity: {}
       containers:
-      - image: gitlab/gitlab-ce@sha256:6916996c5174a61949ba21d11bfa05c39bf70578c9e9d34eb7ea3e4e87e60dd3
+      - image: gitlab/gitlab-ce@sha256:2daa368303a130daf89fbc20b6529f918931ddf70c3e8fb8854efe84ecc4503c
         imagePullPolicy: IfNotPresent
         name: container-0
         ports:
