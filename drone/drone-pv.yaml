@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  finalizers:
+  - kubernetes.io/pv-protection
+  labels:
+    cattle.io/creator: norman
+  name: drone
+spec:
+  accessModes:
+  - ReadWriteOnce
+  - ReadOnlyMany
+  capacity:
+    storage: 10Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: drone
+    namespace: gitlab
+  nfs:
+    path: /mnt/STORAGE/drone
+    server: 10.10.10.61
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem

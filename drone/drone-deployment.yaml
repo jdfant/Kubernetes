@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  generation: 9
+  labels:
+    cattle.io/creator: norman
+    workload.user.cattle.io/workloadselector: deployment-gitlab-drone
+  name: drone
+  namespace: gitlab
+spec:
+  paused: true
+  progressDeadlineSeconds: 600
+  replicas: 0
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: deployment-gitlab-drone
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        workload.user.cattle.io/workloadselector: deployment-gitlab-drone
+    spec:
+      containers:
+      - env:
+        - name: DRONE_GITLAB_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: DRONE_GITLAB_CLIENT_SECRET
+              name: drone-gitlab-secret
+        - name: DRONE_RPC_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: DRONE_RPC_SECRET
+              name: drone-gitlab-secret
+        - name: DRONE_GITLAB_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              key: DRONE_GITLAB_CLIENT_ID
+              name: drone
+        - name: DRONE_GITLAB_SERVER
+          valueFrom:
+            configMapKeyRef:
+              key: DRONE_GITLAB_SERVER
+              name: drone
+        - name: DRONE_SERVER_PROTO
+          valueFrom:
+            configMapKeyRef:
+              key: DRONE_SERVER_PROTO
+              name: drone
+        - name: DRONE_UI_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: DRONE_UI_PASSWORD
+              name: drone-gitlab-secret
+        - name: DRONE_UI_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              key: DRONE_UI_USERNAME
+              name: drone
+        image: drone/drone:2.24.0
+        imagePullPolicy: Always
+        name: drone
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+        - containerPort: 443
+          name: https
+          protocol: TCP
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        stdin: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        tty: true
+        volumeMounts:
+        - mountPath: /var/lib/drone
+          name: drone
+      dnsConfig: {}
+      dnsPolicy: ClusterFirst
+      hostAliases:
+      - hostnames:
+        - gitlab.home.lan
+        ip: 10.10.10.82
+      - hostnames:
+        - drone.home.lan
+        ip: 10.10.10.86
+      nodeName: node1
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: drone
+        persistentVolumeClaim:
+          claimName: drone
