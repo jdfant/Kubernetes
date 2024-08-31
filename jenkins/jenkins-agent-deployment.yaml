@@ -55,7 +55,7 @@ spec:
               key: JENKINS_URL
               name: jenkins-agent
               optional: false
-        image: registry.home.lan:5000/jenkins-agent@sha256:5ecf1625b24a1cff59ae42a714b8bb6371f2246482772d1ac763a28de6b1affb
+        image: registry.home.lan:5000/jenkins-agent@sha256:9140f5baf8dbd5d72ccd858affc3c37a1aa2d3a4718ebb02d74fcc01ba0dee6f
         imagePullPolicy: IfNotPresent
         name: container-0
         resources: {}

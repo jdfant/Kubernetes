@@ -28,7 +28,7 @@ spec:
       - env:
         - name: JAVA_HOME
           value: -Dhudson.footerURL=http://jenkins.home.lan
-        image: registry.home.lan:5000/jenkins-head@sha256:a1ebeaca0a5ad59a66f5c92d51cebbf5b3dc0c5d3ac3121cfd42d778c65b3559
+        image: registry.home.lan:5000/jenkins-head@sha256:7d8a0c36bc3bb3f789613c3b99b64da867185c34757b41aebfe57dd0f06d1401
         imagePullPolicy: IfNotPresent
         name: container-0
         ports:
