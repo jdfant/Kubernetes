@@ -1,0 +1,19 @@
+write-kubeconfig-mode: "0644"
+#server: https://rancho.home.lan:9345
+node-name:
+  - "rancho"
+node-ip:
+  - "10.10.10.60"
+node-external-ip:
+  - "10.10.10.60"
+advertise-address:
+  - "10.10.10.60"
+tls-san:
+  - "10.10.10.60"
+  - "home.lan"
+  - "rancho.home.lan"
+cni:
+  - "cilium"
+selinux:
+  - "false"
+debug: false
