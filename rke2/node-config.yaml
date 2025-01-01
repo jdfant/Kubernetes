@@ -1,0 +1,20 @@
+write-kubeconfig-mode: "0644"
+server: https://rancho.home.lan:9345
+token: "Token from control-plane: 'cat /var/lib/rancher/rke2/server/token'"
+node-name:
+  - "node1"
+node-ip:
+  - "10.10.10.61"
+node-external-ip:
+  - "10.10.10.61"
+advertise-address:
+  - "10.10.10.61"
+tls-san:
+  - "10.10.10.61"
+  - "home.lan"
+  - "node1.home.lan"
+cni:
+  - "cilium"
+selinux:
+  - "false"
+debug: false
